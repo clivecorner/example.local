@@ -1,14 +1,13 @@
 <?php
 
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\NoteController;
 use App\Models\Job;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/jobs', function () {
-    return view('jobs', ['jobs' => Job::jobs()]);
+    return view('jobs', ['jobs' => Job::all()]);
 
 });
 
@@ -29,5 +28,3 @@ Route::get('/job/{id}', function ($id) {
 // Route::get('/note/{id}/edit', [NoteController::class, 'edit'])->name('note.edit');
 // Route::put('/note/{id}', [NoteController::class, 'update'])->name('note.update');
 // Route::delete('/note/{id}', [NoteController::class, 'destroy'])->name('note.destroy');
-
-Route::resource('note', NoteController::class);
