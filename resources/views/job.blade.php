@@ -4,5 +4,12 @@
     </x-slot:heading>
 <p>{{ $job->employer->name }}</p>
 <p >{{ $job['title'] }}</p>
-This job pays ${{ $job['salary'] }} per year
+<p>This job pays ${{ $job['salary'] }} per year</p>
+<div>
+    {{ $job->description }}
+</div>
+@foreach ($job->tags as $tag)
+    <strong> {{ $tag->name }} </strong>
+    
+@endforeach
 </x-layout>

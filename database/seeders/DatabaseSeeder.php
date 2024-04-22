@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Job;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -16,10 +17,13 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'id' => 1,
-            'name' => 'Test User',
+            'first_name' => 'John',
+            'last_name' => 'Doe',
             'email' => 'test@example.com',
             'password' => bcrypt('password'),
         ]);
+
+        Job::factory(10)->create();
 
     }
 }
