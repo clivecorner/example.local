@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/jobs', function () {
-    return view('jobs', ['jobs' => Job::all()]);
+    return view('jobs', ['jobs' => Job::with('employer')->paginate(3)]);
 
 });
 
