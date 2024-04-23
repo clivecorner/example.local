@@ -7,18 +7,34 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/jobs', function () {
-    return view('jobs', ['jobs' => Job::with('employer')->paginate(3)]);
+    return view('jobs/index', ['jobs' => Job::with('employer')->latest()->paginate(3)]);
 
-});
+})->name('jobs.index');
 
-Route::get('/contact', function () {
-    return view('contact');
-});
+Route::get('/jobs/create', function () {
+    return view('jobs/create');
+})->name('jobs.create');
+
+Route::post('/jobs/create', function () {
+
+    Job::create([
+        'title' => request('title'),
+        'description' => request('description'),
+        'employer_id' => 1,
+        'salary' => request('salary'),
+    ]);
+
+    return redirect('/jobs');
+})->name('jobs.store');
 
 Route::get('/job/{id}', function ($id) {
     $job = Job::find($id);
-    return view('job', ['job' => $job]);
+    return view('jobs/show', ['job' => $job]);
 
+})->name('jobs.show');
+
+Route::get('/contact', function () {
+    return view('contact');
 });
 
 // Route::get('/note', [NoteController::class, 'index'])->name('note.index');
