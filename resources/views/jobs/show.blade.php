@@ -12,4 +12,5 @@
     <strong> {{ $tag->name }} </strong>
     
 @endforeach
+<x-button href="/jobs/{{ $job['id'] }}/edit">Edit job</x-button>
 </x-layout>
