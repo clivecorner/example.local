@@ -1,88 +1,44 @@
 <?php
 
 use App\Http\Controllers\HomeController;
-use App\Models\Job;
+use App\Http\Controllers\JobController;
+use App\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-//Index of jobs
-Route::get('/jobs', function () {
-    return view('jobs.index', ['jobs' => Job::with('employer')->latest()->paginate(3)]);
+// //Index of jobs
+// Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
 
-})->name('jobs.index');
+// //Create job
+// Route::get('/jobs/create', [JobController::class, 'create'])->name('jobs.create');
 
-//Create job
-Route::get('/jobs/create', function () {
-    return view('jobs.create');
-})->name('jobs.create');
+// //Store job
+// Route::post('/jobs/create', [JobController::class, 'store'])->name('jobs.store');
 
-//Store job
-Route::post('/jobs/create', function () {
+// //Show job
+// Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show');
 
-    request()->validate([
-        'title' => ['required', 'min:3'],
-        'description' => 'required',
-        'salary' => 'required',
-    ]);
+// //Edit job
+// Route::get('/jobs/{job}/edit', [JobController::class, 'edit'])->name('jobs.edit');
 
-    Job::create([
-        'title' => request('title'),
-        'description' => request('description'),
-        'employer_id' => 1,
-        'salary' => request('salary'),
-    ]);
+// //Update job
+// Route::patch('/jobs/{job}', [JobController::class, 'update'])->name('jobs.update');
 
-    return redirect('/jobs');
-})->name('jobs.store');
+// //Destroy job
+// Route::delete('/jobs/{job}', [JobController::class, 'destroy'])->name('jobs.destroy');
 
-//Show job
-Route::get('/jobs/{id}', function ($id) {
-    $job = Job::find($id);
-    return view('jobs.show', ['job' => $job]);
+Route::resource('jobs', JobController::class);
 
-})->name('jobs.show');
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('auth.create');
+Route::post('/register', [RegisteredUserController::class, 'store'])->name('auth.store');
 
-//Edit job
-Route::get('/jobs/{id}/edit', function ($id) {
-    return view('jobs.edit', ['job' => Job::find($id)]);
-
-})->name('jobs.edit');
-
-//Update job
-Route::patch('/jobs/{id}', function ($id) {
-    request()->validate([
-        'title' => ['required', 'min:3'],
-        'description' => 'required',
-        'salary' => 'required',
-    ]);
-    Job::findOrFail($id)->update([
-        'title' => request('title'),
-        'description' => request('description'),
-        'salary' => request('salary'),
-    ]);
-
-    return redirect('/jobs/' . $id);
-
-})->name('jobs.update');
-
-//Destroy job
-Route::delete('/jobs/{id}', function ($id) {
-
-    Job::findOrFail($id)->delete();
-    return redirect('/jobs');
-
-})->name('jobs.destroy');
+Route::get('/login', [SessionController::class, 'create'])->name('auth.create');
+Route::post('/login', [SessionController::class, 'store'])->name('auth.store');
+Route::post('/logout', [SessionController::class, 'destroy'])->name('auth.destroy');
 
 //View contacts
 Route::get('/contact', function () {
     return view('contact');
 });
-
-// Route::get('/note', [NoteController::class, 'index'])->name('note.index');
-// Route::get('/note/create', [NoteController::class, 'create'])->name('note.create');
-// Route::post('/note', [NoteController::class, 'store'])->name('note.store');
-// Route::get('/note/{id}', [NoteController::class, 'show'])->name('note.show');
-// Route::get('/note/{id}/edit', [NoteController::class, 'edit'])->name('note.edit');
-// Route::put('/note/{id}', [NoteController::class, 'update'])->name('note.update');
-// Route::delete('/note/{id}', [NoteController::class, 'destroy'])->name('note.destroy');
