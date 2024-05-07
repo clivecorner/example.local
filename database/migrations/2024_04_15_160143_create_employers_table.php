@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('employers', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
+            $table->foreignIdFor(\App\Models\User::class, 'user_id')->references('id')->on('users');
             $table->string('name');
             $table->timestamps();
         });

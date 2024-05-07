@@ -12,5 +12,9 @@
     <strong> {{ $tag->name }} </strong>
     
 @endforeach
-<x-button href="/jobs/{{ $job['id'] }}/edit">Edit job</x-button>
+@can('edit-job', $job)
+<p class="mt-10">
+    <x-button href="/jobs/{{ $job['id'] }}/edit">Edit job</x-button>
+</p>
+@endcan
 </x-layout>
