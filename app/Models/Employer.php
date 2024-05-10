@@ -20,6 +20,7 @@ class Employer extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, foreignKey: 'user_id');
+        //return $this->hasOne(User::class, 'user_id');
     }
 }

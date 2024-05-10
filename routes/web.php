@@ -4,7 +4,23 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
+use App\Jobs\TranslateJob;
 use Illuminate\Support\Facades\Route;
+
+// Route::get('/test', function () {
+//     //return new JobPosted();
+//     Mail::to('hello@example.com')->send(new JobPosted());
+//     return 'done';
+
+// });
+
+Route::get('test', function () {
+
+    $job = App\Models\Job::first();
+
+    TranslateJob::dispatch($job);
+    return 'done';
+});
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 

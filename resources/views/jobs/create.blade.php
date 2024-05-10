@@ -2,7 +2,7 @@
     <x-slot:heading>
         Job create
     </x-slot:heading>
-<form  method="POST" action="/jobs">
+<form  method="POST" action="/jobs/create">
     @csrf
   <div class="space-y-12">
     <div class="border-b border-gray-900/10 pb-12">
@@ -33,8 +33,7 @@
         <div class="col-span-full">
           <x-form-label for="description" class="mt-10">About the job</x-form-label>
           <div class="mt-2">
-            <textarea id="description" name="description" rows="3" class="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"  placeholder="Describe the job here...">{{ old('description') }}
-            </textarea>
+            <textarea id="description" name="description" rows="3" class="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"  placeholder="Describe the job here...">{{old('description')}}</textarea>
           </div>
           <div>
             <x-form-error name="description" />
